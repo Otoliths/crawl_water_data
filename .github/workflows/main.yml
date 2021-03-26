@@ -1,0 +1,59 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+# Hourly scraping
+name: crawl_water_data
+
+# Controls when the action will run.
+on:
+  schedule:
+    - cron:  '0 1/4 * * *'
+
+jobs: 
+  autoscrape:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+
+    # Load repo and install R
+    steps:
+    - uses: actions/checkout@master
+    - uses: r-lib/actions/setup-r@master
+
+    # Set-up R
+    - name: Install packages
+      run: |
+        R -e 'install.packages("jsonlite")'
+        R -e 'install.packages("rlist")'
+        
+    # Run R script
+    - name: get_water_quality
+      run: Rscript get_water_quality.R
+      
+ # Add new files in data folder, commit along with other modified files, push
+    - name: push the water_quality_data to GitHub
+      run: |
+        git config --local user.email ly_ding@126.com
+        git config --local user.name Otoliths
+        git add water_quality_data
+        git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+        git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+  
+  # Run R script
+    - name: get_hydrological
+      run: Rscript get_hydrological.R
+      
+ # Add new files in data folder, commit along with other modified files, push
+    - name: push the hydrological_data to GitHub
+      run: |
+        git config --local user.email ly_ding@126.com
+        git config --local user.name Otoliths
+        git add hydrological_data
+        git commit hydrological_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+        git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+      
+      
