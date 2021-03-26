@@ -1,3 +1,6 @@
+if (!requireNamespace(c("jsonlite","rlist"), quietly = TRUE))
+  install.packages("jsonlite","rlist",dependencies = T)
+
 url <- "http://106.37.208.243:8068/GJZ/Ajax/Publish.ashx?AreaID=&RiverID=&MNName=&PageIndex=1&PageSize=9999&action=getRealDatas"
 res <- jsonlite::fromJSON(url, simplifyVector = FALSE)
 res$tbody <- as.data.frame(rlist::list.rbind(res$tbody))
