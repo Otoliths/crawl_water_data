@@ -13,6 +13,7 @@ name: crawl_water_data
 on:
   schedule:
       - cron:  '0 */4 * * *' #Runs on the 0, 4, 8, 12, 16 and 20th hour
+      #At minute 0 past every 4th hour https://crontab.guru/every-4-hours
 
 jobs: 
   autoscrape:
