@@ -21,44 +21,45 @@ on:
 jobs: 
   autoscrape:
     # The type of runner that the job will run on
-    runs-on: macos-latest
-
-    # Load repo and install R
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: r-lib/actions/setup-r@master
+      - name: Checkout
+        uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@master
+      - name: install dependencies
+        run: sudo apt-get install libcurl4-openssl-dev libgeos-dev libudunits2-dev
 
     # Set-up R
-    - name: Install packages
-      run: |
-        R -e 'install.packages("jsonlite")'
-        R -e 'install.packages("rlist")'
-        R -e 'install.packages('curl')'
+      - name: Install packages
+        run: |
+          R -e 'install.packages("jsonlite")'
+          R -e 'install.packages("rlist")'
+          R -e 'install.packages('curl')'
         
     # Run R script
-    - name: get_water_quality
-      run: Rscript get_water_quality.R
+      - name: get_water_quality
+        run: Rscript get_water_quality.R
       
  # Add new files in data folder, commit along with other modified files, push
-    - name: push the water_quality_data to GitHub
-      run: |
-        git config --local user.email ly_ding@126.com
-        git config --local user.name Otoliths
-        git add water_quality_data
-        git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
-        git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+      - name: push the water_quality_data to GitHub
+        run: |
+          git config --local user.email ly_ding@126.com
+          git config --local user.name Otoliths
+          git add water_quality_data
+          git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+          git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
   
   # Run R script
-    - name: get_hydrological
-      run: Rscript get_hydrological.R
+      - name: get_hydrological
+        run: Rscript get_hydrological.R
       
  # Add new files in data folder, commit along with other modified files, push
-    - name: push the hydrological_data to GitHub
-      run: |
-        git config --local user.email ly_ding@126.com
-        git config --local user.name Otoliths
-        git add hydrological_data
-        git commit hydrological_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
-        git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+      - name: push the hydrological_data to GitHub
+        run: |
+         git config --local user.email ly_ding@126.com
+         git config --local user.name Otoliths
+         git add hydrological_data
+         git commit hydrological_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+         git push https://${{github.actor}}:${{secrets.TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
       
       
