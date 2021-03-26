@@ -11,8 +11,12 @@ name: crawl_water_data
 
 # Controls when the action will run.
 on:
-  schedule:
-    - cron:  '0 */4 * * *' 
+   push:
+    branches: [ main ]
+   pull_request:
+    branches: [ main ]
+  #schedule:
+  #  - cron:  '0 */4 * * *' 
 
 jobs: 
   autoscrape:
