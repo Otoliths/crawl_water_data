@@ -34,7 +34,6 @@ jobs:
         run: |
           R -e 'install.packages("jsonlite")'
           R -e 'install.packages("rlist")'
-          R -e 'install.packages('curl')'
         
     # Run R script
       - name: get_water_quality
