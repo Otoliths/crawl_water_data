@@ -1,3 +1,6 @@
+if (!requireNamespace(c("jsonlite","rlist"), quietly = TRUE))
+  install.packages("jsonlite","rlist",dependencies = T)
+
 baseurl1 <- "http://xxfb.mwr.cn/hydroSearch/"
 baseurl2 <- "http://xxfb.mwr.cn/portal/"
 query1 <- c("greatRiver","greatRsvr")
