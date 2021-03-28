@@ -46,7 +46,7 @@ jobs:
         run: |
           git config --local user.email ly_ding@126.com
           git config --local user.name Otoliths
-          git add water_quality_data/*
+          git add water_quality_data/$(date +'%Y-%m-%d')/*
           git commit -am "GH ACTION water quality $(date)"
           git pull origin master
           git push origin main
@@ -66,7 +66,7 @@ jobs:
         run: |
          git config --local user.email ly_ding@126.com
          git config --local user.name Otoliths
-         git add hydrological_data/*
+         git add hydrological_data/$(date +'%Y-%m-%d')/*
          git commit -am "GH ACTION hydrological $(date)"
          git pull origin master
          git push origin main
