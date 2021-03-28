@@ -46,7 +46,7 @@ jobs:
         run: |
           git config --local user.email ly_ding@126.com
           git config --local user.name Otoliths
-          git add water_quality_data/$(date +'%Y-%m-%d')/*
+          git add water_quality_data
           git commit -am "GH ACTION water quality $(date)"
           git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
           #git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
@@ -60,7 +60,7 @@ jobs:
         run: |
          git config --local user.email ly_ding@126.com
          git config --local user.name Otoliths
-         git add hydrological_data/$(date +'%Y-%m-%d')/*
+         git add hydrological_data
          git commit -am "GH ACTION hydrological $(date)"
          git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
         
