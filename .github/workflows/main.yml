@@ -11,8 +11,13 @@ name: crawl_water_data
 
 # Controls when the action will run.
 on:
-  schedule:
-      - cron:  '0 */4 * * *' #Runs on the 0, 4, 8, 12, 16 and 20th hour
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  #schedule:
+  #    - cron:  '0 */4 * * *' #Runs on the 0, 4, 8, 12, 16 and 20th hour
       #At minute 0 past every 4th hour https://crontab.guru/every-4-hours
 
 jobs: 
@@ -42,8 +47,14 @@ jobs:
           git config --local user.email ly_ding@126.com
           git config --local user.name Otoliths
           git add water_quality_data
-          git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
-          git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+          git commit -am "GH ACTION water quality $(date)"
+          git pull origin master
+          git push origin main
+        env:
+         REPO_KEY: ${{secrets.LERY}}
+         username: github-actions
+        # git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+        # git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
   
   # Run R script
       - name: get_hydrological
@@ -55,7 +66,13 @@ jobs:
          git config --local user.email ly_ding@126.com
          git config --local user.name Otoliths
          git add hydrological_data
-         git commit hydrological_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
-         git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+         git commit -am "GH ACTION hydrological $(date)"
+         git pull origin master
+         git push origin main
+        env:
+         REPO_KEY: ${{secrets.LERY}}
+         username: github-actions
+         #git commit hydrological_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
+         #git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
       
       
