@@ -12,7 +12,7 @@ re1$thead <- gsub("<.*?>", "", re1$thead)
 
 re2 <- jsonlite::fromJSON("http://106.37.208.244:10001/Home/GetSectionDataList?", simplifyVector = FALSE)
 re2 <- as.data.frame(rlist::list.rbind(re2))
-download_date <- rep(Sys.Date(),dim(re2)[1])
+download_date <- rep(Sys.time(),dim(re2)[1])
 http_date <- rep(httr::http_date(Sys.time()),dim(re2)[1])
 re2 <- cbind(download_date,http_date,re2)
 
