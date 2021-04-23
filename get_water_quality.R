@@ -10,16 +10,16 @@ names(re1$tbody) <- gsub("<.*?>", "", unlist(re1$thead))
 re1$thead <- gsub("<.*?>", "", re1$thead)
 
 
-#re2 <- jsonlite::fromJSON("http://106.37.208.244:10001/Home/GetSectionDataList?", simplifyVector = FALSE)
-#re2 <- as.data.frame(rlist::list.rbind(re2))
-#download_date <- rep(Sys.time(),dim(re2)[1])
-#http_date <- rep(httr::http_date(Sys.time()),dim(re2)[1])
-#re2 <- cbind(download_date,http_date,re2)
+re2 <- jsonlite::fromJSON("http://106.37.208.244:10001/Home/GetSectionDataList?", simplifyVector = FALSE)
+re2 <- as.data.frame(rlist::list.rbind(re2))
+download_date <- rep(Sys.time(),dim(re2)[1])
+http_date <- rep(httr::http_date(Sys.time()),dim(re2)[1])
+re2 <- cbind(download_date,http_date,re2)
 
-#res <- list(less = re1,more = re2)
+res <- list(less = re1,more = re2)
 
 if (!file.exists(paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))){
   dir.create(paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai")))
 }
 path <- paste0("water_quality_data/",as.POSIXlt(Sys.Date(), "Asia/Shanghai"),"/",as.POSIXlt(Sys.time(), "Asia/Shanghai"),".rds")
-saveRDS(re1,path)
+saveRDS(res,path)
