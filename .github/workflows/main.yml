@@ -34,17 +34,17 @@ jobs:
           R -e 'install.packages("rlist",dependencies = T)'
         
     # Run R script
-      - name: get_water_quality
-        run: Rscript get_water_quality.R
+    #  - name: get_water_quality
+    #    run: Rscript get_water_quality.R
       
  # Add new files in data folder, commit along with other modified files, push
-      - name: push the water_quality_data to GitHub
-        run: |
-          git config --local user.email ly_ding@126.com
-          git config --local user.name Otoliths
-          git add water_quality_data
-          git commit -am "GH ACTION water quality $(date)"
-          git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+    #  - name: push the water_quality_data to GitHub
+    #    run: |
+    #      git config --local user.email ly_ding@126.com
+    #      git config --local user.name Otoliths
+    #      git add water_quality_data
+    #      git commit -am "GH ACTION water quality $(date)"
+    #      git push https://${{github.actor}}:${{secrets.LERY}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
         #git commit water_quality_data --allow-empty -m 'add crawl: ${{github.run_number}}' || echo "No changes to commit"
   
   # Run R script
